@@ -97,3 +97,7 @@ if __name__ == "__main__":
     print("Probabilities:")
     for lbl, prob in zip(LABELS, probabilities):
         print(f"  {lbl.ljust(10)}: {prob:.2f}")
+
+print(f"Stress level: {stress_level} ({stress_ratio:.2f}%)")
+    with open("stress_level.txt", "w") as f:
+        f.write(stress_level)
