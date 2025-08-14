@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Stress Relief Assistant</title>
+    <style>
+      body {
+        background-color: #111;
+        color: #fff;
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        padding: 40px;
+      }
+      h1 {
+        color: #9b59b6;
+      }
+      button {
+        padding: 12px 30px;
+        font-size: 16px;
+        background-color: #9b59b6;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 10px;
+      }
+      button:hover {
+        background-color: #8e44ad;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Stress Relief Assistant</h1>
+
+    {% if stage == 'start' %}
+    <p>Click below to begin webcam emotion analysis.</p>
+    <form method="POST" action="/start">
+      <button type="submit">Start Webcam</button>
+    </form>
+
+    {% elif stage == 'result' %}
+    <p>Detected Stress Level: <strong>{{ stress | capitalize }}</strong></p>
+    <form method="POST" action="/video">
+      <button type="submit">Suggest Video</button>
+    </form>
+
+    {% elif stage == 'video' %}
+    <p>Video opened in external player.</p>
+    <form method="POST" action="/video">
+      <button type="submit">Another Video</button>
+    </form>
+    <form method="POST" action="/music">
+      <button type="submit">Next: Music</button>
+    </form>
+
+    {% elif stage == 'music' %}
+    <p>Music opened in external player.</p>
+    <form method="POST" action="/music">
+      <button type="submit">Another Music</button>
+    </form>
+    <form method="POST" action="/activities">
+      <button type="submit">Next: Activities</button>
+    </form>
+
+    {% elif stage == 'activities' %}
+    <p>Try these activities:</p>
+    <ul>
+      {% for item in activities %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    <form method="POST" action="/activities">
+      <button type="submit">Suggest New Activities</button>
+    </form>
+    {% endif %}
+  </body>
+</html>
